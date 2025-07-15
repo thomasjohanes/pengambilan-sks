@@ -23,9 +23,9 @@ Route::get('/login', function () {
 
 Route::post('/login', function (Request $request) {
     $user = Student::where('email', $request->email)->first();
-
+       
     if ($user && Hash::check($request->password, $user->password)) {
-        session([
+        session([   
             'nama' => $user->nama,
             'nim' => $user->nim,
             'jurusan' => $user->jurusan,

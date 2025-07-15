@@ -11,20 +11,19 @@ return new class extends Migration
      *
      * @return void
      */
-   public function up()
+
+    public function up()
 {
-    Schema::create('students', function (Blueprint $table) {
+    Schema::create('student', function (Blueprint $table) {
         $table->id();
-        $table->string('nim')->unique();
         $table->string('nama');
+        $table->string('nim')->unique();
         $table->string('email')->unique();
         $table->string('password');
         $table->string('jurusan');
-        $table->year('angkatan');
         $table->timestamps();
     });
 }
-
 
     /**
      * Reverse the migrations.
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('student');
     }
 };
