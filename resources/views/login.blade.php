@@ -18,25 +18,27 @@
   </nav>
 
   <!-- Login Form -->
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="col-md-4">
+    <div class="card shadow">
+      <div class="card-body">
         <h2 class="mb-4 text-center">Login</h2>
 
-        <form>
+        <form method="POST" action="/login">
+          @csrf
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+            <input type="email" class="form-control" id="email" name="email" required>
           </div>
 
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="******" required>
+            <input type="password" class="form-control" id="password" name="password" required>
           </div>
 
           <div class="mb-3">
             <label for="role" class="form-label">Sebagai</label>
-            <select class="form-select" id="role" required>
+            <select class="form-select" id="role" name="role" required>
               <option selected disabled>Pilih peran</option>
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
@@ -50,6 +52,7 @@
       </div>
     </div>
   </div>
+</div>
 
   <!-- Footer -->
   <footer class="bg-light text-center text-muted mt-5 py-3">
