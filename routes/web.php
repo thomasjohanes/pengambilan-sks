@@ -13,30 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use Illuminate\Http\Request;
-use App\Models\Student;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\AuthController;
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login', [AuthController::class, 'showLogin']);
+Route::post('/login', [AuthController::class, 'processLogin']);
 
-Route::post('/login', function (Request $request) {
-    $user = Student::where('email', $request->email)->first();
-       
-    if ($user && Hash::check($request->password, $user->password)) {
-        session([   
-            'nama' => $user->nama,
-            'nim' => $user->nim,
-            'jurusan' => $user->jurusan,
-        ]);
-        return redirect('/dashboard');
-    }
+Route::get('/dashboard', [AuthController::class, 'showDashboard']);
+Route::post('/dashboard', [AuthController::class, 'processDashboard']);
 
-    return back()->with('error', 'Login gagal');
-});
+Route::get('/student/menu', [AuthController::class, 'showMenu']);
 
-Route::get('/dashboard', function () {
-    $data = session()->only(['nama', 'nim', 'jurusan']);
-    return view('dashboard', compact('data'));
-});
+Route::get('/logout', [AuthController::class, 'logout']);
