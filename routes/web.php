@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/login', [AuthController::class, 'showLogin']);
 Route::post('/login', [AuthController::class, 'processLogin']);
@@ -24,3 +25,5 @@ Route::post('/dashboard', [AuthController::class, 'processDashboard']);
 Route::get('/student/menu', [AuthController::class, 'showMenu']);
 
 Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::get('/', [DashboardController::class, 'index']);
