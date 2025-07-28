@@ -42,6 +42,7 @@
               <option selected disabled>Pilih peran</option>
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
+              <option value="Admin">Admin</option>
             </select>
           </div>
 

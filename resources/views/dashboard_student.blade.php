@@ -24,13 +24,13 @@
 </head>
 <body>
     <div class="form-card text-center">
-        <h2 class="mb-1">👋 Selamat Datang</h2>
+        <h2 class="mb-1">👋 Login student</h2>
         <p class="text-muted">Email: <strong>{{ session('email') }}</strong> | Role: <strong>{{ session('role') }}</strong></p>
 
         <hr class="my-4">
 
         <h4 class="mb-3">Lengkapi Data Mahasiswa</h4>
-        <form method="POST" action="/dashboard" class="text-start">
+        <form method="POST" action="/dashboard/student" class="text-start">
             @csrf
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>

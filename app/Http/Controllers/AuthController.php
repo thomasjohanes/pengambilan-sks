@@ -6,49 +6,113 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    // Tampilkan form login
+    // Menampilkan form login
     public function showLogin()
     {
         return view('login');
     }
 
-    // Proses login dan redirect ke dashboard
+    // Proses login (simulasi tanpa database)
     public function processLogin(Request $request)
     {
-        // Validasi bisa ditambah jika mau
+        // Simpan email dan role ke session
         session([
             'email' => $request->email,
             'role' => $request->role
         ]);
 
-        return redirect('/dashboard');
+        // Redirect berdasarkan role
+        if ($request->role === 'student') {
+            return redirect('/dashboard/student');
+        } elseif ($request->role === 'teacher') {
+            return redirect('/dashboard/teacher');
+        } elseif ($request->role === 'admin') {
+            return redirect('/dashboard/admin');
+        } else {
+            return redirect('/dashboard');
+        }
     }
 
-    // Tampilkan form dashboard (isi nama, nim, jurusan)
+    // Dashboard fallback
     public function showDashboard()
     {
         return view('dashboard');
     }
 
-    // Proses form dashboard → redirect ke menu
+    public function showStudentDashboard()
+    {
+        if (session('role') !== 'student') {
+            return redirect('/login')->with('error', 'Akses ditolak.');
+        }
+
+        return view('dashboard_student');
+    }
+
+    public function showTeacherDashboard()
+    {
+        if (session('role') !== 'teacher') {
+            return redirect('/login')->with('error', 'Akses ditolak.');
+        }
+
+        return view('dashboard_teacher');
+    }
+
+    public function showAdminDashboard()
+    {
+        if (session('role') !== 'admin') {
+            return redirect('/login')->with('error', 'Akses ditolak.');
+        }
+
+        return view('dashboard_admin');
+    }
+
+    // Proses isi data pengguna → redirect ke menu masing-masing
     public function processDashboard(Request $request)
     {
         session([
             'nama' => $request->nama,
-            'nim' => $request->nim,
-            'jurusan' => $request->jurusan
+            'nim' => $request->nim ?? null,
+            'jurusan' => $request->jurusan ?? null
         ]);
 
-        return redirect('/Mahasiswa/menu');
+        if (session('role') === 'student') {
+            return redirect('/mahasiswa/menu');
+        } elseif (session('role') === 'teacher') {
+            return redirect('/dosen/menu');
+        } elseif (session('role') === 'admin') {
+            return redirect('/admin/menu');
+        } else {
+            return redirect('/dashboard');
+        }
     }
 
-    // Tampilkan menu mahasiswa
     public function showMenu()
     {
-        return view('Mahasiswa_menu');
+        if (session('role') !== 'student') {
+            return redirect('/login')->with('error', 'Akses ditolak.');
+        }
+
+        return view('mahasiswa_menu');
     }
 
-    // Logout
+    public function showDosenMenu()
+    {
+        if (session('role') !== 'teacher') {
+            return redirect('/login')->with('error', 'Akses ditolak.');
+        }
+
+        return view('dosen_menu');
+    }
+
+    public function showAdminMenu()
+    {
+        if (session('role') !== 'admin') {
+            return redirect('/login')->with('error', 'Akses ditolak.');
+        }
+
+        return view('admin_menu');
+    }
+
     public function logout()
     {
         session()->flush();
