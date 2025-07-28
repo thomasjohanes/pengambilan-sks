@@ -39,13 +39,13 @@ class AuthController extends Controller
             'jurusan' => $request->jurusan
         ]);
 
-        return redirect('/student/menu');
+        return redirect('/Mahasiswa/menu');
     }
 
     // Tampilkan menu mahasiswa
     public function showMenu()
     {
-        return view('student_menu');
+        return view('Mahasiswa_menu');
     }
 
     // Logout

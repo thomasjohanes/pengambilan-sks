@@ -22,7 +22,7 @@ Route::post('/login', [AuthController::class, 'processLogin']);
 Route::get('/dashboard', [AuthController::class, 'showDashboard']);
 Route::post('/dashboard', [AuthController::class, 'processDashboard']);
 
-Route::get('/student/menu', [AuthController::class, 'showMenu']);
+Route::get('/Mahasiswa/menu', [AuthController::class, 'showMenu']);
 
 Route::get('/logout', [AuthController::class, 'logout']);
 
