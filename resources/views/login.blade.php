@@ -24,6 +24,12 @@
       <div class="card-body">
         <h2 class="mb-4 text-center">Login</h2>
 
+         @if(session('error'))
+          <div class="alert alert-danger">
+            {{ session('error') }}
+          </div>
+        @endif
+
         <form method="POST" action="/login">
           @csrf
           <div class="mb-3">
@@ -37,12 +43,12 @@
           </div>
 
           <div class="mb-3">
-            <label for="role" class="form-label">Sebagai</label>
+            <label for="role" class="form-label">role</label>
             <select class="form-select" id="role" name="role" required>
               <option selected disabled>Pilih peran</option>
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
-              <option value="Admin">Admin</option>
+              <option value="admin">Admin</option>
             </select>
           </div>
 

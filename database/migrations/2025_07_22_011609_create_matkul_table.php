@@ -13,12 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('_matkul', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_matkul');
-            $table->integer('sks');
-            $table->timestamps();
-        });
+      Schema::create('matkul', function (Blueprint $table) {
+    $table->id();
+    $table->string('kode_matkul')->unique();
+    $table->string('nama');
+    $table->integer('sks');
+    $table->integer('semester');
+    $table->string('jurusan');
+    $table->foreignId('dosen_id')->nullable()->constrained('dosens')->onDelete('set null');
+    $table->text('deskripsi')->nullable();
+    $table->timestamps();
+});
+
     }
 
     /**
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_matkul');
+        Schema::dropIfExists('matkul');
     }
 };

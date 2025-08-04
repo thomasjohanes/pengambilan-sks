@@ -11,19 +11,18 @@ return new class extends Migration
      *
      * @return void
      */
-
     public function up()
-{
-    Schema::create('mahasiswa', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama');
-        $table->string('nim')->unique();
-        $table->string('email')->unique();
-        $table->string('password');
-        $table->string('jurusan');
-        $table->timestamps();
-    });
-}
+    {
+       Schema::create('admin', function (Blueprint $table) {
+    $table->id();
+    $table->string('nama');
+    $table->string('email')->unique();
+    $table->string('password');
+    $table->string('role')->default('admin');
+    $table->timestamps();
+});
+
+    }
 
     /**
      * Reverse the migrations.
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('student');
+        Schema::dropIfExists('admin');
     }
 };

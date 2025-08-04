@@ -30,6 +30,18 @@
         <hr class="my-4">
 
         <h4 class="mb-3">Lengkapi Data Mahasiswa</h4>
+
+         {{-- Error display --}}
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form method="POST" action="/dashboard/student" class="text-start">
             @csrf
             <div class="mb-3">

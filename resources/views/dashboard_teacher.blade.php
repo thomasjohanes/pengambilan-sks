@@ -37,8 +37,8 @@
                 <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan nama lengkap" required>
             </div>
             <div class="mb-3">
-                <label for="nim" class="form-label">NIM</label>
-                <input type="text" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM" required>
+                <label for="nidn" class="form-label">NIDN</label>
+                <input type="text" class="form-control" id="nidn" name="nidn" placeholder="Masukkan NIDN" required>
             </div>
             <div class="mb-4">
                 <label for="jurusan" class="form-label">Jurusan</label>

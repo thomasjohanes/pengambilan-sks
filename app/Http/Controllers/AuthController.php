@@ -3,42 +3,71 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
+use App\Models\Admin;
 
 class AuthController extends Controller
 {
-    // Menampilkan form login
+    // Menampilkan halaman login
     public function showLogin()
     {
         return view('login');
     }
 
-    // Proses login (simulasi tanpa database)
+    // Proses login
     public function processLogin(Request $request)
     {
-        // Simpan email dan role ke session
-        session([
-            'email' => $request->email,
-            'role' => $request->role
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'role' => 'required'
         ]);
 
-        // Redirect berdasarkan role
-        if ($request->role === 'student') {
-            return redirect('/dashboard/student');
-        } elseif ($request->role === 'teacher') {
-            return redirect('/dashboard/teacher');
-        } elseif ($request->role === 'admin') {
-            return redirect('/dashboard/admin');
+        $role = $request->role;
+        $email = $request->email;
+        $password = $request->password;
+
+        if ($role === 'student') {
+            $user = Mahasiswa::where('email', $email)->first();
+        } elseif ($role === 'teacher') {
+            $user = Dosen::where('email', $email)->first();
+        } elseif ($role === 'admin') {
+            $user = Admin::where('email', $email)->first();
         } else {
-            return redirect('/dashboard');
+            return redirect('/login')->with('error', 'Peran tidak valid.');
+        }
+
+        if ($user && Hash::check($password, $user->password)) {
+            session([
+                'email' => $user->email,
+                'role' => $role,
+                'nama' => $user->nama ?? null,
+                'id' => $user->id
+            ]);
+
+            if ($role === 'student') {
+                return redirect('/dashboard/student');
+            } elseif ($role === 'teacher') {
+                return redirect('/dashboard/teacher');
+            } else {
+                return redirect('/admin/menu'); 
+            }
+
+        } else {
+            return redirect('/login')->with('error', 'Email atau password salah.');
         }
     }
 
-    // Dashboard fallback
-    public function showDashboard()
+    // Logout
+    public function logout()
     {
-        return view('dashboard');
+        session()->flush();
+        return redirect('/login')->with('success', 'Berhasil logout.');
     }
 
+    // Tampilkan dashboard mahasiswa
     public function showStudentDashboard()
     {
         if (session('role') !== 'student') {
@@ -48,6 +77,7 @@ class AuthController extends Controller
         return view('dashboard_student');
     }
 
+    // Tampilkan dashboard dosen
     public function showTeacherDashboard()
     {
         if (session('role') !== 'teacher') {
@@ -57,6 +87,7 @@ class AuthController extends Controller
         return view('dashboard_teacher');
     }
 
+    // Tampilkan dashboard admin
     public function showAdminDashboard()
     {
         if (session('role') !== 'admin') {
@@ -66,26 +97,7 @@ class AuthController extends Controller
         return view('dashboard_admin');
     }
 
-    // Proses isi data pengguna → redirect ke menu masing-masing
-    public function processDashboard(Request $request)
-    {
-        session([
-            'nama' => $request->nama,
-            'nim' => $request->nim ?? null,
-            'jurusan' => $request->jurusan ?? null
-        ]);
-
-        if (session('role') === 'student') {
-            return redirect('/mahasiswa/menu');
-        } elseif (session('role') === 'teacher') {
-            return redirect('/dosen/menu');
-        } elseif (session('role') === 'admin') {
-            return redirect('/admin/menu');
-        } else {
-            return redirect('/dashboard');
-        }
-    }
-
+    // Tampilkan menu mahasiswa
     public function showMenu()
     {
         if (session('role') !== 'student') {
@@ -95,8 +107,11 @@ class AuthController extends Controller
         return view('mahasiswa_menu');
     }
 
+    // Tampilkan menu dosen
     public function showDosenMenu()
     {
+        dd(session()->all());
+
         if (session('role') !== 'teacher') {
             return redirect('/login')->with('error', 'Akses ditolak.');
         }
@@ -104,8 +119,9 @@ class AuthController extends Controller
         return view('dosen_menu');
     }
 
+    // Tampilkan menu admin
     public function showAdminMenu()
-    {
+    {   
         if (session('role') !== 'admin') {
             return redirect('/login')->with('error', 'Akses ditolak.');
         }
@@ -113,9 +129,29 @@ class AuthController extends Controller
         return view('admin_menu');
     }
 
-    public function logout()
+    // Proses input dashboard mahasiswa (validasi nama, nim, jurusan)
+    public function processDashboard(Request $request)
     {
-        session()->flush();
-        return redirect('/login');
+        if (session('role') !== 'student') {
+            return redirect('/login')->with('error', 'Akses ditolak.');
+        }
+
+        $request->validate([
+            'nama' => 'required|string|max:100',
+            'nim' => 'required|string|max:20',
+            'jurusan' => 'required|string|max:50',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'nim.required' => 'NIM wajib diisi.',
+            'jurusan.required' => 'Jurusan wajib diisi.',
+        ]);
+
+        session([
+            'nama' => $request->nama,
+            'nim' => $request->nim,
+            'jurusan' => $request->jurusan
+        ]);
+
+        return redirect('/mahasiswa/menu');
     }
 }

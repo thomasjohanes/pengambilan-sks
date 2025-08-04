@@ -2,100 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Menu Mahasiswa - MyKRS</title>
+    <title>MyKRS - Menu Mahasiswa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background: linear-gradient(135deg, #eef2f7, #dbeafe);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: #1d4ed8;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+        }
+
         .menu-card {
-            transition: transform 0.2s ease;
+            border: none;
+            border-radius: 15px;
+            background: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
         .menu-card:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
         }
+
         .icon {
+            font-size: 2.5rem;
+            color: #1d4ed8;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .header-title {
             font-size: 2rem;
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+
+        .container {
+            padding-bottom: 50px;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4 text-center">📚 Menu Mahasiswa</h2>
 
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-
-            <!-- Isi KRS -->
-            <div class="col">
-                <div class="card menu-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><span class="icon">📄</span> Isi KRS</h5>
-                        <p class="card-text">Memilih mata kuliah yang akan diambil pada semester berjalan.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lihat KRS Lama -->
-            <div class="col">
-                <div class="card menu-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><span class="icon">🔍</span> Lihat KRS Lama</h5>
-                        <p class="card-text">Melihat KRS semester-semester sebelumnya.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Status KRS -->
-            <div class="col">
-                <div class="card menu-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><span class="icon">📋</span> Status KRS</h5>
-                        <p class="card-text">Melihat apakah KRS sudah disetujui dosen atau belum.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cetak KRS -->
-            <div class="col">
-                <div class="card menu-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><span class="icon">📝</span> Cetak KRS</h5>
-                        <p class="card-text">Mencetak KRS yang sudah disetujui.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Profil Mahasiswa -->
-            <div class="col">
-                <div class="card menu-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><span class="icon">👤</span> Profil Mahasiswa</h5>
-                        <p class="card-text">Melihat data pribadi, NIM, jurusan, dll.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Jadwal Kuliah -->
-            <div class="col">
-                <div class="card menu-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><span class="icon">📅</span> Jadwal Kuliah</h5>
-                        <p class="card-text">Melihat jadwal kuliah berdasarkan KRS yang diambil.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Revisi KRS -->
-            <div class="col">
-                <div class="card menu-card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title"><span class="icon">🔁</span> Revisi KRS</h5>
-                        <p class="card-text">Mengubah KRS jika belum disetujui atau ditolak dosen.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<nav class="navbar navbar-expand-lg shadow">
+    <div class="container">
+        <a class="navbar-brand" href="#">MyKRS</a>
     </div>
+</nav>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container mt-5">
+    <h2 class="text-center mb-5 header-title">📚 Menu Mahasiswa</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+
+        <!-- Isi KRS -->
+        <div class="col">
+            <div class="card menu-card h-100">
+                <div class="card-body text-center">
+                    <div class="icon mb-3">📄</div>
+                    <h5 class="card-title">Isi KRS</h5>
+                    <p class="card-text">Pilih mata kuliah yang ingin diambil semester ini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jadwal Kuliah -->
+        <div class="col">
+            <div class="card menu-card h-100">
+                <div class="card-body text-center">
+                    <div class="icon mb-3">📅</div>
+                    <h5 class="card-title">Lihat Jadwal</h5>
+                    <p class="card-text">Lihat jadwal kuliah dari KRS aktif.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cetak KRS -->
+        <div class="col">
+            <div class="card menu-card h-100">
+                <div class="card-body text-center">
+                    <div class="icon mb-3">📝</div>
+                    <h5 class="card-title">Cetak KRS</h5>
+                    <p class="card-text">Cetak KRS yang sudah disetujui oleh dosen pembimbing.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

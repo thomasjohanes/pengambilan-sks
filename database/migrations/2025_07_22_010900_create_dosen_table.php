@@ -13,12 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dosen', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('nidn')->unique();
-            $table->timestamps();
-        });
+       Schema::create('dosen', function (Blueprint $table) {
+        $table->id();
+        $table->string('nidn')->unique();
+        $table->string('nama');
+        $table->string('email')->unique()->nullable();
+        $table->string('password')->nullable();
+        $table->string('jurusan');
+        $table->string('no_hp')->nullable();
+        $table->text('alamat')->nullable();
+        $table->timestamps();
+});
+
     }
 
     /**
